@@ -3,6 +3,11 @@ node_modules/
 web/dist/
 build/
 macos/.build/
+android/.gradle/
+android/build/
+android/app/build/
+android/app/src/main/assets/web/
+android/local.properties
 *.dSYM/
 
 # macOS, editors
