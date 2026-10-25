@@ -3,6 +3,15 @@
 What changed in each release of House Control. The Mac app is on
 [Releases](https://github.com/0xProbabillity/house-control/releases); the iPhone app is on TestFlight.
 
+## 1.0.5 — 2026-10-25
+
+### Brand & Platform Identity Update (Xhome)
+
+- **Brand Evolution**: Renamed application to **Xhome** across all platforms (macOS desktop app and iOS mobile app).
+- **Unified Controls & Widgets**: Updated widget identifiers, bundle naming, and app group configurations for seamless cross-device synchronization.
+- **Release Automation**: Updated packaging pipelines and GitHub release workflows to output native `Xhome-<version>.dmg` packages.
+- **Enhanced Updater**: Pointed in-app update notifications and changelog links to the official repository.
+
 ## 1.0.4 — 2026-10-18
 
 ### Bilingual Localization (Vietnamese & English)
