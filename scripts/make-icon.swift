@@ -71,7 +71,7 @@ func render(_ pixels: Int, fullBleed: Bool = false) -> Data {
     return rep.representation(using: .png, properties: [:])!
 }
 
-let iconset = FileManager.default.temporaryDirectory.appendingPathComponent("HouseControl.iconset")
+let iconset = FileManager.default.temporaryDirectory.appendingPathComponent("Xhome.iconset")
 try? FileManager.default.removeItem(at: iconset)
 try FileManager.default.createDirectory(at: iconset, withIntermediateDirectories: true)
 for size in [16, 32, 128, 256, 512] {

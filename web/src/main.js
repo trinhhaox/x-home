@@ -217,7 +217,7 @@ async function boot() {
         { label: t('revealPlan', 'Reveal plan file'), action: () => post('revealPlan') },
         { label: t('checkForUpdates', 'Check for updates…'), action: () => post('checkUpdates') },
         '-',
-        { label: t('quitApp', 'Quit House Control'), action: () => post('quit') });
+        { label: t('quitApp', 'Quit Xhome'), action: () => post('quit') });
     }
     openMenu(panel.anchorMenu, anchor, items);
   }

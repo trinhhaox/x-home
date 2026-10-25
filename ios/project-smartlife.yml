@@ -7,13 +7,13 @@
 # scripts/build-ios.sh and scripts/ios-sim.sh build it unless EDITION=appstore.
 include: [project.yml]
 targets:
-  HouseControl:
+  Xhome:
     dependencies:
       - package: HouseCore
         product: HouseSmartLife
     info:
       properties:
-        NSPhotoLibraryAddUsageDescription: House Control saves the Smart Life sign-in code to Photos, so the Smart Life app on this iPhone can scan it from there.
+        NSPhotoLibraryAddUsageDescription: Xhome saves the Smart Life sign-in code to Photos, so the Smart Life app on this iPhone can scan it from there.
     settings:
       base:
         SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) SMART_LIFE

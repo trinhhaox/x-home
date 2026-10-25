@@ -1,15 +1,15 @@
-// Internationalization (i18n) for House Control: English & Vietnamese (Tiếng Việt).
+// Internationalization (i18n) for Xhome: English & Vietnamese (Tiếng Việt).
 
 const DICTIONARY = {
   en: {
     // Header & Global
-    appName: 'House Control',
+    appName: 'Xhome',
     all: 'All',
     allOn: 'All on',
     allOff: 'All off',
     toggleEverything: 'Everything on / off',
     floorPlan: 'Floor plan',
-    quitApp: 'Quit House Control',
+    quitApp: 'Quit Xhome',
     editHome: 'Edit home…',
     aiAccess: 'AI access…',
     stopAIAccess: 'Stop AI access',
@@ -19,7 +19,7 @@ const DICTIONARY = {
     revealLog: 'Reveal device log',
     checkForUpdates: 'Check for updates…',
     updateAvailable: 'Update available',
-    updateBadgeTitle: 'A new version of House Control is available — click to download',
+    updateBadgeTitle: 'A new version of Xhome is available — click to download',
     language: 'Language',
     myHome: 'My home',
     reload: 'Reload',
@@ -117,13 +117,13 @@ const DICTIONARY = {
 
   vi: {
     // Header & Global
-    appName: 'House Control',
+    appName: 'Xhome',
     all: 'Tất cả',
     allOn: 'Bật hết',
     allOff: 'Tắt hết',
     toggleEverything: 'Bật / tắt tất cả',
     floorPlan: 'Sơ đồ nhà',
-    quitApp: 'Thoát House Control',
+    quitApp: 'Thoát Xhome',
     editHome: 'Chỉnh sửa nhà…',
     aiAccess: 'Truy cập AI…',
     stopAIAccess: 'Dừng truy cập AI',
@@ -133,7 +133,7 @@ const DICTIONARY = {
     revealLog: 'Mở nhật ký thiết bị',
     checkForUpdates: 'Kiểm tra cập nhật…',
     updateAvailable: 'Có bản cập nhật mới',
-    updateBadgeTitle: 'Đã có phiên bản mới của House Control — bấm để tải về',
+    updateBadgeTitle: 'Đã có phiên bản mới của Xhome — bấm để tải về',
     language: 'Ngôn ngữ',
     myHome: 'Nhà của tôi',
     reload: 'Tải lại',

@@ -2,15 +2,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "HouseControl",
+    name: "Xhome",
     platforms: [.macOS(.v13)],
     dependencies: [
         .package(path: "../core")
     ],
     targets: [
-        .executableTarget(name: "HouseControl",
+        .executableTarget(name: "Xhome",
                           dependencies: [.product(name: "HouseCore", package: "core"),
                                          .product(name: "HouseSmartLife", package: "core")],
-                          path: "Sources/HouseControl")
+                          path: "Sources/Xhome")
     ]
 )

@@ -102,7 +102,7 @@ struct SettingsView: View {
                     .buttonStyle(SecondaryButtonStyle())
             }
             if !model.hasCustomPlan {
-                footnote(loc("Make your own home here, or pair with House Control on a Mac and the one drawn there arrives by itself.", "Tạo ngôi nhà của bạn tại đây, hoặc ghép đôi với House Control trên Mac để đồng bộ tự động."))
+                footnote(loc("Make your own home here, or pair with Xhome on a Mac and the one drawn there arrives by itself.", "Tạo ngôi nhà của bạn tại đây, hoặc ghép đôi với Xhome trên Mac để đồng bộ tự động."))
             }
         }
     }
@@ -234,8 +234,8 @@ struct SettingsView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(loc("Optional: a Mac", "Tùy chọn: Máy Mac")).font(.system(size: 16.5, weight: .semibold)).foregroundStyle(Theme.text)
                             Text(loc(
-                                "Pair with House Control on a Mac and your home — rooms, lamps, device links, connections — stays the same on both, whichever one you edit.",
-                                "Ghép đôi với House Control trên Mac để đồng bộ tự động ngôi nhà của bạn — phòng, đèn, thiết bị và các kết nối."
+                                "Pair with Xhome on a Mac and your home — rooms, lamps, device links, connections — stays the same on both, whichever one you edit.",
+                                "Ghép đôi với Xhome trên Mac để đồng bộ tự động ngôi nhà của bạn — phòng, đèn, thiết bị và các kết nối."
                             ))
                                 .font(.system(size: 14))
                                 .foregroundStyle(Theme.muted)
@@ -405,7 +405,7 @@ struct SettingsView: View {
         switch model.homeKit {
         case .off: return loc("Lamps, ACs and sensors from the Home app", "Đèn, máy lạnh và cảm biến từ ứng dụng Nhà")
         case .waiting: return loc("Opening your homes…", "Đang mở danh sách nhà…")
-        case .denied: return loc("Not allowed. Turn on House Control in Settings → Privacy → HomeKit", "Chưa cấp quyền. Bật House Control trong Cài đặt → Quyền riêng tư → HomeKit")
+        case .denied: return loc("Not allowed. Turn on Xhome in Settings → Privacy → HomeKit", "Chưa cấp quyền. Bật Xhome trong Cài đặt → Quyền riêng tư → HomeKit")
         case .ready(let homes, let accessories):
             if homes.isEmpty { return loc("No homes yet. Set one up in the Home app", "Chưa có nhà nào. Hãy tạo trong ứng dụng Nhà") }
             return "\(accessories) \(loc("accessories", "phụ kiện")) · \(homes.joined(separator: ", "))"
@@ -437,12 +437,12 @@ struct SettingsView: View {
             }
             footnote(AppModel.includesSmartLife
                 ? loc(
-                    "House Control talks to your own devices: Tuya's servers for Smart Life, your Home Assistant, your Hue Bridge, Apple Home, and your Mac. Nothing else leaves this iPhone.",
-                    "House Control kết nối trực tiếp với thiết bị của bạn: máy chủ Tuya, Home Assistant, Hue Bridge, Apple Home và máy Mac. Không có dữ liệu nào khác rời khỏi iPhone."
+                    "Xhome talks to your own devices: Tuya's servers for Smart Life, your Home Assistant, your Hue Bridge, Apple Home, and your Mac. Nothing else leaves this iPhone.",
+                    "Xhome kết nối trực tiếp với thiết bị của bạn: máy chủ Tuya, Home Assistant, Hue Bridge, Apple Home và máy Mac. Không có dữ liệu nào khác rời khỏi iPhone."
                 )
                 : loc(
-                    "House Control talks to your own devices: your Home Assistant, your Hue Bridge, Apple Home, and your Mac. Nothing else leaves this iPhone.",
-                    "House Control kết nối trực tiếp với thiết bị của bạn: Home Assistant, Hue Bridge, Apple Home và máy Mac. Không có dữ liệu nào khác rời khỏi iPhone."
+                    "Xhome talks to your own devices: your Home Assistant, your Hue Bridge, Apple Home, and your Mac. Nothing else leaves this iPhone.",
+                    "Xhome kết nối trực tiếp với thiết bị của bạn: Home Assistant, Hue Bridge, Apple Home và máy Mac. Không có dữ liệu nào khác rời khỏi iPhone."
                 ))
             Card {
                 webRow(About.website, symbol: "globe", tint: Theme.accent, title: loc("Website", "Trang web"), detail: loc("Features, help and the Mac app", "Tính năng, trợ giúp và ứng dụng Mac"))
@@ -458,7 +458,7 @@ struct SettingsView: View {
                 webRow(About.github, symbol: "chevron.left.forwardslash.chevron.right", tint: Theme.text,
                        title: "\(About.developer) on GitHub", detail: "github.com/0xProbabillity")
                 RowDivider()
-                webRow(About.source, symbol: "shippingbox.fill", tint: Theme.text, title: loc("Source code", "Mã nguồn"), detail: loc("House Control is open source", "House Control là mã nguồn mở"))
+                webRow(About.source, symbol: "shippingbox.fill", tint: Theme.text, title: loc("Source code", "Mã nguồn"), detail: loc("Xhome is open source", "Xhome là mã nguồn mở"))
             }
         }
     }

@@ -2,7 +2,7 @@ import Foundation
 import CryptoKit
 
 /// Persists which floor plan is active and the user's own plan file.
-/// Everything lives in ~/Library/Application Support/HouseControl (or HOUSE_DATA_DIR).
+/// Everything lives in ~/Library/Application Support/Xhome (or HOUSE_DATA_DIR).
 public final class PlanStore {
     public static let bundled = ["home", "studio"]
 
@@ -20,7 +20,13 @@ public final class PlanStore {
             directory = URL(fileURLWithPath: (custom as NSString).expandingTildeInPath, isDirectory: true)
         } else {
             let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            directory = base.appendingPathComponent("HouseControl", isDirectory: true)
+            let newDir = base.appendingPathComponent("Xhome", isDirectory: true)
+            let oldDir = base.appendingPathComponent("HouseControl", isDirectory: true)
+            if !FileManager.default.fileExists(atPath: newDir.path) && FileManager.default.fileExists(atPath: oldDir.path) {
+                directory = oldDir
+            } else {
+                directory = newDir
+            }
         }
         try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         if let data = try? Data(contentsOf: settingsURL),
@@ -76,8 +82,8 @@ public final class PlanStore {
     /// Checks that `data` is a floor plan at all before it replaces the user's one.
     public static func validate(_ data: Data) throws -> [String: Any] {
         guard let plan = try JSONSerialization.jsonObject(with: data) as? [String: Any], plan["rooms"] is [Any] else {
-            throw NSError(domain: "HouseControl", code: 1, userInfo: [
-                NSLocalizedDescriptionKey: "This file is not a House Control floor plan (no \"rooms\" list)."])
+            throw NSError(domain: "Xhome", code: 1, userInfo: [
+                NSLocalizedDescriptionKey: "This file is not a Xhome floor plan (no \"rooms\" list)."])
         }
         return plan
     }

@@ -156,10 +156,10 @@ struct Caption: View {
 
 /// The deep links the app understands.
 enum DeepLink {
-    static func home() -> URL { URL(string: "housecontrol://open")! }
+    static func home() -> URL { URL(string: "xhome://open")! }
     static func device(_ id: String) -> URL {
         var c = URLComponents()
-        c.scheme = "housecontrol"
+        c.scheme = "xhome"
         c.host = "open"
         c.queryItems = [URLQueryItem(name: "device", value: id)]
         return c.url!

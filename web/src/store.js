@@ -1,6 +1,6 @@
 import { post, call, isNative } from './bridge.js';
 
-const STORAGE_KEY = 'house-control:state:v1';
+const STORAGE_KEY = 'x-home:state:v1';
 
 export const AC_MODES = ['cool', 'heat', 'dry', 'fan', 'auto'];
 export const AC_FANS = ['auto', 'low', 'medium', 'high', 'turbo'];
@@ -73,7 +73,7 @@ export function createStore(config) {
 
   let restored = false;
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || localStorage.getItem('house-control:state:v1') || 'null');
     if (saved && saved.home === config.name) {
       for (const [id, s] of Object.entries(saved.lights || {})) if (state.lights[id]) Object.assign(state.lights[id], s);
       for (const [id, s] of Object.entries(saved.acs || {})) if (state.acs[id]) Object.assign(state.acs[id], s);

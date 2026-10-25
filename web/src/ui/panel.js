@@ -49,7 +49,7 @@ export function createPanel(root, config, store, { onFocus, onMenu }) {
     onclick: () => post('toggleIsland'),
   }, icon('island', 18));
   if (islandBtn && currentIslandShown) islandBtn.classList.add('on');
-  const quit = isPhone ? null : h('button.round.quit', { title: t('quitApp'), 'aria-label': 'Quit House Control', onclick: () => post('quit') }, icon('close', 17, 2.2));
+  const quit = isPhone ? null : h('button.round.quit', { title: t('quitApp'), 'aria-label': 'Quit Xhome', onclick: () => post('quit') }, icon('close', 17, 2.2));
   // Shown while an AI assistant has a link to this home (AI Access on the Mac).
   const aiBadge = h('button.ai-badge', { hidden: true, title: 'An AI assistant has access — click to manage', 'aria-label': 'AI access',
     onclick: () => onMenu(aiBadge, 'agent') }, icon('sparkles', 13, 2.2), h('span', 'AI'));
@@ -807,7 +807,7 @@ export function createPanel(root, config, store, { onFocus, onMenu }) {
     setUpdate(info) {
       if (info && info.available) {
         updateBadge.hidden = false;
-        updateBadge.title = `House Control v${info.version} is available — click to download`;
+        updateBadge.title = `Xhome v${info.version} is available — click to download`;
         const label = updateBadge.querySelector('span');
         if (label) label.textContent = `v${info.version}`;
       } else {

@@ -1,7 +1,7 @@
 # The Xcode project is generated from this file: `xcodegen generate` (scripts/build-ios.sh does it).
 # This is the App Store edition: Home Assistant, Philips Hue and Apple Home. The edition with
 # Smart Life on top (TestFlight, own use) is project-smartlife.yml, which includes this file.
-name: HouseControl
+name: Xhome
 options:
   bundleIdPrefix: io.github.0xprobabillity
   deploymentTarget:
@@ -15,7 +15,7 @@ packages:
   HouseCore:
     path: ../core
 targets:
-  HouseControl:
+  Xhome:
     type: application
     platform: iOS
     sources:
@@ -39,7 +39,7 @@ targets:
     info:
       path: Config/Info.plist
       properties:
-        CFBundleDisplayName: House Control
+        CFBundleDisplayName: Xhome
         HouseAppGroup: $(HOUSE_APP_GROUP)
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
@@ -50,22 +50,22 @@ targets:
         UIRequiresFullScreen: true
         UIUserInterfaceStyle: Dark
         ITSAppUsesNonExemptEncryption: false
-        NSLocalNetworkUsageDescription: House Control finds your Home Assistant and Hue Bridge on this Wi-Fi network, and your Mac, to keep your floor plan the same on both.
-        NSBonjourServices: [_housecontrol._tcp, _hue._tcp, _home-assistant._tcp]
-        NSHomeKitUsageDescription: House Control shows the lamps, air conditioners and thermometers of your homes in its 3D view and switches them for you.
+        NSLocalNetworkUsageDescription: Xhome finds your Home Assistant and Hue Bridge on this Wi-Fi network, and your Mac, to keep your floor plan the same on both.
+        NSBonjourServices: [_xhome._tcp, _housecontrol._tcp, _hue._tcp, _home-assistant._tcp]
+        NSHomeKitUsageDescription: Xhome shows the lamps, air conditioners and thermometers of your homes in its 3D view and switches them for you.
         # Home Assistant answers plain HTTP on the local network, the Hue Bridge HTTPS with its own certificate.
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
-        NSCameraUsageDescription: The camera reads the pairing code shown by House Control on your Mac.
+        NSCameraUsageDescription: The camera reads the pairing code shown by Xhome on your Mac.
         CFBundleURLTypes:
-          - CFBundleURLName: io.github.0xprobabillity.HouseControl.pair
-            CFBundleURLSchemes: [housecontrol]
+          - CFBundleURLName: io.github.0xprobabillity.Xhome.pair
+            CFBundleURLSchemes: [xhome, housecontrol]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.0xprobabillity.HouseControl3D
         # Shared with the widgets: the home they draw, and the actions they queue.
         HOUSE_APP_GROUP: group.io.github.0xprobabillity.HouseControl3D
-        PRODUCT_NAME: HouseControl
+        PRODUCT_NAME: Xhome
         TARGETED_DEVICE_FAMILY: "1"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
@@ -92,7 +92,7 @@ targets:
     info:
       path: ../widgets/Config/Info-iOS.plist
       properties:
-        CFBundleDisplayName: House Control
+        CFBundleDisplayName: Xhome
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         HouseAppGroup: $(HOUSE_APP_GROUP)
@@ -108,10 +108,10 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         SKIP_INSTALL: YES
 schemes:
-  HouseControl:
+  Xhome:
     build:
       targets:
-        HouseControl: all
+        Xhome: all
     run:
       config: Debug
     archive:

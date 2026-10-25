@@ -18,7 +18,7 @@ struct WelcomeView: View {
                 .padding(.top, 44)
                 .accessibilityHidden(true)
 
-            Text(loc("Welcome to House Control", "Chào mừng đến với House Control"))
+            Text(loc("Welcome to Xhome", "Chào mừng đến với Xhome"))
                 .font(.system(size: 27, weight: .bold))
                 .foregroundStyle(Theme.text)
                 .multilineTextAlignment(.center)

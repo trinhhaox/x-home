@@ -3,7 +3,7 @@ import Foundation
 /// Checks for published releases on GitHub and compares semantic versions.
 public enum AppUpdater {
     public static let repoOwner = "trinhhaox"
-    public static let repoName = "house-control"
+    public static let repoName = "x-home"
     public static let releasesURL = URL(string: "https://github.com/\(repoOwner)/\(repoName)/releases")!
     public static let latestReleaseAPI = URL(string: "https://api.github.com/repos/\(repoOwner)/\(repoName)/releases/latest")!
 
@@ -105,7 +105,7 @@ public enum AppUpdater {
     ) async throws -> Release? {
         var request = URLRequest(url: latestReleaseAPI)
         request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
-        request.setValue("HouseControl-App", forHTTPHeaderField: "User-Agent")
+        request.setValue("Xhome-App", forHTTPHeaderField: "User-Agent")
         request.timeoutInterval = 15
 
         let (data, response) = try await session.data(for: request)
@@ -132,7 +132,7 @@ public enum AppUpdater {
 
         return Release(
             tagName: payload.tagName,
-            title: payload.name ?? "House Control \(candidateVersion)",
+            title: payload.name ?? "Xhome \(candidateVersion)",
             notes: payload.body ?? "",
             releaseURL: releaseURL,
             publishedAt: payload.publishedAt,

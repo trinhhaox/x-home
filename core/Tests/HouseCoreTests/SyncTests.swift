@@ -10,14 +10,17 @@ final class SyncTests: XCTestCase {
         let pairing = SyncPairing.generate(name: "Studio Mac")
         XCTAssertEqual(pairing.key.count, 32)
         let link = pairing.link
-        XCTAssertTrue(link.hasPrefix("housecontrol://pair?"))
+        XCTAssertTrue(link.hasPrefix("xhome://pair?"))
         XCTAssertEqual(SyncPairing(link: "  \(link)\n"), pairing)
+        // Backwards compatibility with legacy scheme:
+        let legacyLink = link.replacingOccurrences(of: "xhome://", with: "housecontrol://")
+        XCTAssertEqual(SyncPairing(link: legacyLink), pairing)
     }
 
     func testPairingLinkRejectsGarbage() {
         XCTAssertNil(SyncPairing(link: "https://example.com/pair?v=1&id=a&key=b"))
-        XCTAssertNil(SyncPairing(link: "housecontrol://pair?v=1&id=abc&key=c2hvcnQ"))
-        XCTAssertNil(SyncPairing(link: "housecontrol://pair?v=2&id=abc&key=\(SyncPairing.base64URL(Data(count: 32)))"))
+        XCTAssertNil(SyncPairing(link: "xhome://pair?v=1&id=abc&key=c2hvcnQ"))
+        XCTAssertNil(SyncPairing(link: "xhome://pair?v=2&id=abc&key=\(SyncPairing.base64URL(Data(count: 32)))"))
         XCTAssertNil(SyncPairing(link: "tuyaSmart--qrLogin?token=abc"))
     }
 

@@ -13,7 +13,7 @@ final class EditorController: NSObject, NSWindowDelegate {
                           styleMask: [.titled, .closable, .miniaturizable, .resizable],
                           backing: .buffered, defer: false)
         super.init()
-        window.title = "House Control — Edit Home"
+        window.title = "Xhome — Edit Home"
         window.titlebarAppearsTransparent = true
         window.backgroundColor = NSColor(calibratedRed: 0.04, green: 0.055, blue: 0.1, alpha: 1)
         window.appearance = NSAppearance(named: .darkAqua)
@@ -22,7 +22,7 @@ final class EditorController: NSObject, NSWindowDelegate {
         window.delegate = self
         window.contentView = host.webView
         window.center()
-        window.setFrameAutosaveName("HouseControlEditor")
+        window.setFrameAutosaveName("XhomeEditor")
     }
 
     func show() {

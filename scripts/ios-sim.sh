@@ -18,10 +18,10 @@ fi
 cd "$ROOT/ios"
 [ "${EDITION:-smartlife}" = appstore ] && SPEC=project.yml || SPEC=project-smartlife.yml
 xcodegen generate --spec "$SPEC" --quiet
-xcodebuild -project HouseControl.xcodeproj -scheme HouseControl -configuration Debug \
+xcodebuild -project Xhome.xcodeproj -scheme Xhome -configuration Debug \
   -destination "platform=iOS Simulator,$DEST" -derivedDataPath build/DerivedData \
   CODE_SIGN_IDENTITY=- build 2>&1 | grep -E "error|warning: |BUILD" | grep -v appintentsmetadataprocessor || true
-APP="build/DerivedData/Build/Products/Debug-iphonesimulator/HouseControl.app"
+APP="build/DerivedData/Build/Products/Debug-iphonesimulator/Xhome.app"
 [ -d "$APP" ] || { echo "Build failed"; exit 1; }
 # Choosing a lamp, room or AC for a widget needs a signature with a team: the simulator's
 # App Intents service ignores the entities of an ad-hoc signed app. Uses your Apple

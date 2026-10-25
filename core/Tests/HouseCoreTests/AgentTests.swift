@@ -26,7 +26,7 @@ private final class FakeHome: AgentBackend {
             return ["content": [["type": "text", "text": "Home with 1 lamp"]], "isError": false, "summary": "Looked", "quiet": true,
                     "structuredContent": ["home": "Test"]]
         case "guide":
-            return ["text": "# House Control — Test\nbase \(request["base"] as? String ?? "")"]
+            return ["text": "# Xhome — Test\nbase \(request["base"] as? String ?? "")"]
         case "instructions":
             return ["text": "Call get_home first."]
         case "link":
@@ -93,7 +93,7 @@ final class AgentTests: XCTestCase {
         let result = try XCTUnwrap((json(initialize) as? [String: Any])?["result"] as? [String: Any])
         XCTAssertEqual(result["protocolVersion"] as? String, "2025-06-18")
         XCTAssertEqual(result["instructions"] as? String, "Call get_home first.")
-        XCTAssertEqual((result["serverInfo"] as? [String: Any])?["name"] as? String, "house-control")
+        XCTAssertEqual((result["serverInfo"] as? [String: Any])?["name"] as? String, "x-home")
 
         let note = await rpc(["jsonrpc": "2.0", "method": "notifications/initialized"], session: session)
         XCTAssertEqual(note.status, 202)
@@ -205,7 +205,7 @@ final class AgentTests: XCTestCase {
         let base = URL(string: "http://127.0.0.1:\(port)/secret-token")!
         let (guide, response) = try await URLSession.shared.data(from: base)
         XCTAssertEqual((response as? HTTPURLResponse)?.statusCode, 200)
-        XCTAssertTrue(String(data: guide, encoding: .utf8)!.hasPrefix("# House Control"))
+        XCTAssertTrue(String(data: guide, encoding: .utf8)!.hasPrefix("# Xhome"))
 
         var post = URLRequest(url: base.appendingPathComponent("mcp"))
         post.httpMethod = "POST"

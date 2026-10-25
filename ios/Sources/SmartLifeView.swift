@@ -199,7 +199,7 @@ struct SmartLifeView: View {
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 if saved == false {
-                    ProblemLabel(text: "House Control may not add to Photos. Allow it in Settings → Privacy & Security → Photos, or share the code instead.")
+                    ProblemLabel(text: "Xhome may not add to Photos. Allow it in Settings → Privacy & Security → Photos, or share the code instead.")
                 }
             }
 

@@ -106,7 +106,7 @@ final class HomeWeb: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         MainActor.assumeIsolated {
             guard let body = message.body as? [String: Any] else { return }
             if body["type"] as? String == "log" {
-                Logger(subsystem: Bundle.main.bundleIdentifier ?? "HouseControl", category: "web-\(mode)").error("\(body["text"] as? String ?? "", privacy: .public)")
+                Logger(subsystem: Bundle.main.bundleIdentifier ?? "Xhome", category: "web-\(mode)").error("\(body["text"] as? String ?? "", privacy: .public)")
                 return
             }
             if body["type"] as? String == "ready" {

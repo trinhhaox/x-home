@@ -1,7 +1,7 @@
 #!/bin/bash
 # Builds the Mac app people download: universal, signed with a Developer ID, notarized by
 # Apple and packed into a disk image, so it opens on any Mac without a warning.
-#   ./scripts/release-mac.sh             build/HouseControl-<version>.dmg
+#   ./scripts/release-mac.sh             build/Xhome-<version>.dmg
 #   ./scripts/release-mac.sh --publish   …and attach it to a GitHub release v<version> (needs `gh`)
 #
 # Needs:
@@ -18,9 +18,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 VERSION="$(sed -n 's/^MARKETING_VERSION *= *//p' "$ROOT/ios/Config/Base.xcconfig")"
 # Its own folder, so a release build never replaces the app you run from build/.
-# The bundle is named with a space here, which is what people see in Applications.
-APP="$ROOT/build/release/House Control.app"
-DMG="$ROOT/build/HouseControl-$VERSION.dmg"
+APP="$ROOT/build/release/Xhome.app"
+DMG="$ROOT/build/Xhome-$VERSION.dmg"
 command -v uvx >/dev/null || { echo "Install uv first: brew install uv"; exit 1; }
 
 if [ -z "${UNSIGNED:-}" ]; then
@@ -47,12 +46,12 @@ if [ -z "${UNSIGNED:-}" ]; then
 fi
 
 UNIVERSAL=1 APP_PATH="$APP" "$ROOT/scripts/build-app.sh"
-lipo -archs "$APP/Contents/MacOS/HouseControl"
+lipo -archs "$APP/Contents/MacOS/Xhome"
 
 [ -f "$ROOT/macos/dmg-background.tiff" ] || "$ROOT/scripts/make-dmg-background.swift"
 echo "▸ Packing $DMG"
 rm -f "$DMG"
-uvx --quiet dmgbuild -s "$ROOT/scripts/dmg-settings.py" -D app="$APP" -D root="$ROOT" "House Control $VERSION" "$DMG"
+uvx --quiet dmgbuild -s "$ROOT/scripts/dmg-settings.py" -D app="$APP" -D root="$ROOT" "Xhome $VERSION" "$DMG"
 
 if [ -z "${UNSIGNED:-}" ]; then
   codesign --force --timestamp --sign "$CODESIGN_IDENTITY" "$DMG"
@@ -74,5 +73,5 @@ if [ "${1:-}" = "--publish" ]; then
   [ -z "${UNSIGNED:-}" ] || { echo "Refusing to publish an unsigned image"; exit 1; }
   echo "▸ Publishing release v$VERSION"
   cd "$ROOT"
-  gh release create "v$VERSION" "$DMG" "$DMG.sha256" --title "House Control $VERSION" --generate-notes
+  gh release create "v$VERSION" "$DMG" "$DMG.sha256" --title "Xhome $VERSION" --generate-notes
 fi

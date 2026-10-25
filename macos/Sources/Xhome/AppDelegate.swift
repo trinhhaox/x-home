@@ -53,7 +53,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             button.target = self
             button.action = #selector(statusItemClicked)
             button.sendAction(on: [.leftMouseUp, .rightMouseUp])
-            button.toolTip = "House Control"
+            button.toolTip = "Xhome"
         }
 
         let host = WebHost(mode: "panel", transparent: true) { [unowned self] in self.bootPayload() }
@@ -99,9 +99,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// `housecontrol://open[?device=…]`: a click on a widget opens the panel (on that lamp, AC or room).
+    /// `xhome://open[?device=…]`: a click on a widget opens the panel (on that lamp, AC or room).
     func application(_ application: NSApplication, open urls: [URL]) {
-        guard let url = urls.first, url.scheme == SyncPairing.scheme, url.host == "open" else { return }
+        guard let url = urls.first, (url.scheme == SyncPairing.scheme || url.scheme == "housecontrol"), url.host == "open" else { return }
         if !panel.isVisible { togglePanel() }
         if let device = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "device" })?.value {
             panel.host.call("openDevice", device)
@@ -111,7 +111,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }
 
     func applicationWillTerminate(_ notification: Notification) {
-        agent.stop(reason: "House Control quit")
+        agent.stop(reason: "Xhome quit")
     }
 
     /// `kill`, a logout or Ctrl-C end the app without applicationWillTerminate: the AI
@@ -122,7 +122,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             signal(sig, SIG_IGN)
             let source = DispatchSource.makeSignalSource(signal: sig, queue: .main)
             source.setEventHandler { [weak self] in
-                MainActor.assumeIsolated { self?.agent.stop(reason: "House Control quit") }
+                MainActor.assumeIsolated { self?.agent.stop(reason: "Xhome quit") }
                 exit(0)
             }
             source.resume()
@@ -133,7 +133,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Status item
 
     private func symbol(_ name: String) -> NSImage? {
-        let image = NSImage(systemSymbolName: name, accessibilityDescription: "House Control")?
+        let image = NSImage(systemSymbolName: name, accessibilityDescription: "Xhome")?
             .withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 14, weight: .medium))
         image?.isTemplate = true
         return image
@@ -217,7 +217,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             menu.addItem(.separator())
             menu.addItem(aboutMenuItem())
             menu.addItem(withTitle: Self.loc("Reload", "Tải lại"), action: #selector(reloadAll), keyEquivalent: "").target = self
-            menu.addItem(withTitle: Self.loc("Quit House Control", "Thoát House Control"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+            menu.addItem(withTitle: Self.loc("Quit Xhome", "Thoát Xhome"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
             statusItem.menu = menu
             statusItem.button?.performClick(nil)
             statusItem.menu = nil
@@ -305,11 +305,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSWorkspace.shared.activateFileViewerSelecting([url])
     }
 
-    /// "About House Control": the version, the website and where to find the developer.
+    /// "About Xhome": the version, the website and where to find the developer.
     private func aboutMenuItem() -> NSMenuItem {
         let about = NSMenu()
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        about.addItem(withTitle: "House Control\(version.map { " \($0)" } ?? "")", action: nil, keyEquivalent: "")
+        about.addItem(withTitle: "Xhome\(version.map { " \($0)" } ?? "")", action: nil, keyEquivalent: "")
         about.addItem(.separator())
         let updateTitle = availableUpdate != nil 
             ? Self.loc("Update Available (v\(availableUpdate!.version))…", "Có bản cập nhật mới (v\(availableUpdate!.version))…")
@@ -334,7 +334,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             item.representedObject = url
             item.image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)
         }
-        let item = NSMenuItem(title: Self.loc("About House Control", "Giới thiệu House Control"), action: nil, keyEquivalent: "")
+        let item = NSMenuItem(title: Self.loc("About Xhome", "Giới thiệu Xhome"), action: nil, keyEquivalent: "")
         item.submenu = about
         return item
     }
@@ -400,8 +400,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     let alert = NSAlert()
                     alert.messageText = Self.loc("You're Up to Date!", "Bạn đang dùng phiên bản mới nhất!")
                     alert.informativeText = Self.loc(
-                        "House Control \(current) is currently the newest version available.",
-                        "House Control \(current) hiện là phiên bản mới nhất."
+                        "Xhome \(current) is currently the newest version available.",
+                        "Xhome \(current) hiện là phiên bản mới nhất."
                     )
                     alert.alertStyle = .informational
                     alert.addButton(withTitle: "OK")
@@ -433,14 +433,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let current = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0.4"
         let alert = NSAlert()
         alert.messageText = Self.loc(
-            "House Control \(release.version) is Available!",
-            "Đã có bản cập nhật House Control \(release.version)!"
+            "Xhome \(release.version) is Available!",
+            "Đã có bản cập nhật Xhome \(release.version)!"
         )
         let rawNotes = release.notes.trimmingCharacters(in: .whitespacesAndNewlines)
         let snippet = rawNotes.count > 500 ? String(rawNotes.prefix(500)) + "…" : rawNotes
         let intro = Self.loc(
-            "A new version of House Control is available on GitHub (currently running \(current)).\n\n",
-            "Đã có phiên bản mới của House Control trên GitHub (bản hiện tại: \(current)).\n\n"
+            "A new version of Xhome is available on GitHub (currently running \(current)).\n\n",
+            "Đã có phiên bản mới của Xhome trên GitHub (bản hiện tại: \(current)).\n\n"
         )
         let outro = Self.loc(
             "Would you like to download the updated disk image?",
@@ -765,7 +765,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         do {
             try plans.saveCustom(data: data, select: first || plans.activePlan == "custom")
         } catch {
-            NSLog("House Control: could not store the plan from %@: %@", phone, error.localizedDescription)
+            NSLog("Xhome: could not store the plan from %@: %@", phone, error.localizedDescription)
             return
         }
         reloadLinks()
@@ -792,7 +792,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             window.addButton(Self.loc("Reset Pairing…", "Đặt lại ghép đôi…")) { [weak self] in self?.resetPairing() }
             pairingWindow = window
         }
-        let headline = Self.loc("Scan with House Control on your iPhone", "Quét bằng ứng dụng House Control trên iPhone của bạn")
+        let headline = Self.loc("Scan with Xhome on your iPhone", "Quét bằng ứng dụng Xhome trên iPhone của bạn")
         let detail = Self.loc(
             "On the iPhone open Settings → Pair with Mac. Both devices must be on the same Wi-Fi. "
                 + "Your floor plan, device links and connections stay the same on both, whichever one you edit; "
@@ -828,8 +828,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             // Until macOS lets the app use the local network, no phone can find this Mac.
             pairingWindow?.setStatus(
                 Self.loc(
-                    "Allow Local Network access for House Control in System Settings → Privacy & Security",
-                    "Cho phép quyền Mạng cục bộ (Local Network) cho House Control trong Cài đặt hệ thống → Quyền riêng tư & Bảo mật"
+                    "Allow Local Network access for Xhome in System Settings → Privacy & Security",
+                    "Cho phép quyền Mạng cục bộ (Local Network) cho Xhome trong Cài đặt hệ thống → Quyền riêng tư & Bảo mật"
                 ),
                 active: false
             )
@@ -865,9 +865,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let headline = Self.loc("Scan with the Smart Life app on \(device)", "Quét bằng ứng dụng Smart Life trên \(device)")
         let detail = Self.loc(
             "Switch to Smart Life on the iPhone, tap the scanner on its Home tab and confirm the login. "
-                + "Then return to House Control: this window closes once the iPhone is signed in.",
+                + "Then return to Xhome: this window closes once the iPhone is signed in.",
             "Mở ứng dụng Smart Life trên iPhone, bấm biểu tượng quét mã tại tab Trang chủ và xác nhận đăng nhập. "
-                + "Sau đó quay lại House Control: cửa sổ này sẽ tự đóng lại khi đăng nhập thành công."
+                + "Sau đó quay lại Xhome: cửa sổ này sẽ tự đóng lại khi đăng nhập thành công."
         )
         loginWindow?.show(code: content, headline: headline, detail: detail)
         loginWindow?.setStatus(Self.loc("Requested by \(device)", "Yêu cầu từ \(device)"), active: true)
@@ -879,7 +879,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let main = NSMenu()
         let appItem = NSMenuItem()
         let appMenu = NSMenu()
-        appMenu.addItem(withTitle: "Quit House Control", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appMenu.addItem(withTitle: "Quit Xhome", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
         main.addItem(appItem)
 

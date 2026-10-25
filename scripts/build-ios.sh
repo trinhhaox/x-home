@@ -10,7 +10,7 @@
 # The build number is CURRENT_PROJECT_VERSION in ios/Config/Base.xcconfig: raise it for every upload.
 #   EDITION=…       smartlife (default): with Smart Life, for TestFlight and own use (ios/project-smartlife.yml)
 #                   appstore: without it, the app that goes to App Review (ios/project.yml,
-#                   io.github.0xprobabillity.HouseControl3D)
+#                   com.trinhhao.Xhome)
 #   BUNDLE_ID=…     the Smart Life edition's bundle id (and <id>.Widgets for the widgets): the one
 #                   your own App Store Connect record was created with; the project files are not
 #                   changed. Required to upload that edition, which never goes to the App Store app.
@@ -48,16 +48,16 @@ cd "$ROOT/ios"
 [ -f Config/Local.xcconfig ] || { echo "Create ios/Config/Local.xcconfig with: DEVELOPMENT_TEAM = <your team id>"; exit 1; }
 xcodegen generate --spec "$SPEC" --quiet
 if [ -n "${BUNDLE_ID:-}" ]; then
-  sed -i '' "s/PRODUCT_BUNDLE_IDENTIFIER = io\.github\.0xprobabillity\.HouseControl\([.;]\)/PRODUCT_BUNDLE_IDENTIFIER = $BUNDLE_ID\1/" \
-    HouseControl.xcodeproj/project.pbxproj
+  sed -i '' "s/PRODUCT_BUNDLE_IDENTIFIER = com\.trinhhao\.Xhome\([.;]\)/PRODUCT_BUNDLE_IDENTIFIER = $BUNDLE_ID\1/" \
+    Xhome.xcodeproj/project.pbxproj
 fi
-rm -rf build/HouseControl.xcarchive build/export
-xcodebuild archive -project HouseControl.xcodeproj -scheme HouseControl -configuration Release \
-  -destination 'generic/platform=iOS' -archivePath build/HouseControl.xcarchive \
+rm -rf build/Xhome.xcarchive build/export
+xcodebuild archive -project Xhome.xcodeproj -scheme Xhome -configuration Release \
+  -destination 'generic/platform=iOS' -archivePath build/Xhome.xcarchive \
   -derivedDataPath build/DerivedData "${AUTH[@]}" 2>&1 | grep -E "error|ARCHIVE" || true
-[ -d build/HouseControl.xcarchive ] || { echo "Archive failed"; exit 1; }
+[ -d build/Xhome.xcarchive ] || { echo "Archive failed"; exit 1; }
 # The App Store edition must not contain the Smart Life client at all, not even unused.
-APP_DIR=build/HouseControl.xcarchive/Products/Applications/HouseControl.app
+APP_DIR=build/Xhome.xcarchive/Products/Applications/Xhome.app
 if grep -rlq -e "iotbing" -e "SmartLifePlatform" "$APP_DIR"; then
   [ "$EDITION" = smartlife ] || { echo "Smart Life code found in the App Store edition"; exit 1; }
 else
@@ -65,13 +65,13 @@ else
 fi
 
 echo "▸ Exporting"
-xcodebuild -exportArchive -archivePath build/HouseControl.xcarchive -exportPath build/export \
+xcodebuild -exportArchive -archivePath build/Xhome.xcarchive -exportPath build/export \
   -exportOptionsPlist Config/ExportOptions.plist "${AUTH[@]}" 2>&1 | grep -E "error|EXPORT" || true
-[ -f build/export/HouseControl.ipa ] || { echo "Export failed"; exit 1; }
-echo "✓ ios/build/export/HouseControl.ipa"
+[ -f build/export/Xhome.ipa ] || { echo "Export failed"; exit 1; }
+echo "✓ ios/build/export/Xhome.ipa"
 
 if [ "${1:-}" = "--upload" ]; then
   echo "▸ Uploading to App Store Connect"
-  xcrun altool --upload-app -f build/export/HouseControl.ipa -t ios \
+  xcrun altool --upload-app -f build/export/Xhome.ipa -t ios \
     --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID" 2>&1 | grep -E "UPLOAD|ERROR|error" || true
 fi

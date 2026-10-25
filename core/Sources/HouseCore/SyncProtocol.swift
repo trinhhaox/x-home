@@ -24,9 +24,9 @@ public struct SyncPairing: Codable, Equatable {
         return SyncPairing(id: UUID().uuidString.lowercased(), name: name, key: Data(bytes))
     }
 
-    public static let scheme = "housecontrol"
+    public static let scheme = "xhome"
 
-    /// `housecontrol://pair?v=1&id=…&name=…&key=…` — the content of the pairing QR code.
+    /// `xhome://pair?v=1&id=…&name=…&key=…` — the content of the pairing QR code.
     public var link: String {
         var c = URLComponents()
         c.scheme = Self.scheme
@@ -43,7 +43,7 @@ public struct SyncPairing: Codable, Equatable {
     /// Reads a pairing link; nil for anything that is not one.
     public init?(link: String) {
         guard let c = URLComponents(string: link.trimmingCharacters(in: .whitespacesAndNewlines)),
-              c.scheme == Self.scheme, c.host == "pair" else { return nil }
+              (c.scheme == Self.scheme || c.scheme == "housecontrol"), c.host == "pair" else { return nil }
         let items = Dictionary((c.queryItems ?? []).map { ($0.name, $0.value ?? "") }, uniquingKeysWith: { a, _ in a })
         guard items["v"] == "1", let id = items["id"], !id.isEmpty,
               let key = items["key"].flatMap(Self.data(base64URL:)), key.count == 32 else { return nil }
@@ -108,7 +108,7 @@ public struct SyncState {
 }
 
 enum SyncTransport {
-    static let serviceType = "_housecontrol._tcp"
+    static let serviceType = "_xhome._tcp"
     static let maxFrame = 8 * 1024 * 1024
 
     /// TLS 1.2 with a pre-shared key and nothing else: a peer that does not hold the
@@ -116,9 +116,9 @@ enum SyncTransport {
     static func parameters(key: Data) -> NWParameters {
         let tls = NWProtocolTLS.Options()
         let options = tls.securityProtocolOptions
-        let derived = HMAC<SHA256>.authenticationCode(for: Data("HouseControl sync v1".utf8), using: SymmetricKey(data: key))
+        let derived = HMAC<SHA256>.authenticationCode(for: Data("Xhome sync v1".utf8), using: SymmetricKey(data: key))
         let psk = derived.withUnsafeBytes { DispatchData(bytes: $0) }
-        let hint = Data("housecontrol".utf8).withUnsafeBytes { DispatchData(bytes: $0) }
+        let hint = Data("xhome".utf8).withUnsafeBytes { DispatchData(bytes: $0) }
         sec_protocol_options_add_pre_shared_key(options, psk as __DispatchData, hint as __DispatchData)
         sec_protocol_options_append_tls_ciphersuite(options, tls_ciphersuite_t(rawValue: UInt16(TLS_PSK_WITH_AES_128_GCM_SHA256))!)
         sec_protocol_options_set_min_tls_protocol_version(options, .TLSv12)

@@ -10,7 +10,7 @@ import HouseCore
 
 struct SetLightIntent: SetValueIntent {
     static let title: LocalizedStringResource = "Switch a Light"
-    static let description = IntentDescription("Turns a House Control lamp on or off.")
+    static let description = IntentDescription("Turns a Xhome lamp on or off.")
     @Parameter(title: "Light") var light: LightEntity
     @Parameter(title: "On") var value: Bool
 
@@ -38,7 +38,7 @@ struct SetAllLightsIntent: SetValueIntent {
 
 struct SetClimateIntent: SetValueIntent {
     static let title: LocalizedStringResource = "Switch an Air Conditioner"
-    static let description = IntentDescription("Turns a House Control air conditioner on or off.")
+    static let description = IntentDescription("Turns a Xhome air conditioner on or off.")
     @Parameter(title: "Air Conditioner") var ac: ACEntity
     @Parameter(title: "On") var value: Bool
 
@@ -53,7 +53,7 @@ struct SetClimateIntent: SetValueIntent {
 
 struct RunSceneIntent: AppIntent {
     static let title: LocalizedStringResource = "Apply a Scene"
-    static let description = IntentDescription("Sets every lamp and air conditioner the way a House Control scene says.")
+    static let description = IntentDescription("Sets every lamp and air conditioner the way a Xhome scene says.")
     @Parameter(title: "Scene") var scene: SceneEntity
 
     init() {}

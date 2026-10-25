@@ -731,7 +731,7 @@ export async function bootEditor(root) {
 
   function tuyaPanel() {
     const nodes = [];
-    if (!isNative) nodes.push(h('p.note.bad', 'Connecting works inside the House Control app (this is the browser preview).'));
+    if (!isNative) nodes.push(h('p.note.bad', 'Connecting works inside the Xhome app (this is the browser preview).'));
 
     if (tuya.account.connected) {
       nodes.push(section('Smart Life account',

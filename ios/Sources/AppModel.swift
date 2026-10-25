@@ -132,7 +132,7 @@ final class AppModel {
         let directory = plans.directory
         func secret(_ name: String) -> SecretStore {
             sandboxed ? FileSecretStore(url: directory.appendingPathComponent("\(name).json"))
-                      : KeychainSecretStore(service: Bundle.main.bundleIdentifier ?? "HouseControl", account: name)
+                      : KeychainSecretStore(service: Bundle.main.bundleIdentifier ?? "Xhome", account: name)
         }
         #if SMART_LIFE
         hub = DeviceHub(directory: directory, secret: secret, homeKit: homeKitService, cloud: SmartLifePlatform.init)

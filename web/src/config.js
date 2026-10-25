@@ -21,7 +21,7 @@ export function linkOf(d) {
 
 export const isLinked = (d) => Boolean(linkOf(d));
 
-/** The platforms House Control can link to, in the order the editor lists them. */
+/** The platforms Xhome can link to, in the order the editor lists them. */
 export const SERVICES = {
   smartlife: { name: 'Smart Life', short: 'Smart Life' },
   homeassistant: { name: 'Home Assistant', short: 'Home Assistant' },

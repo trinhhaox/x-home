@@ -692,7 +692,7 @@ html.native .card { width: auto; height: auto; box-shadow:
 @keyframes ai-glow { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
 .card.detail .top .ai-badge { opacity: 0; pointer-events: none; }
 
-/* A newer version of House Control is available on GitHub. */
+/* A newer version of Xhome is available on GitHub. */
 .update-badge {
   position: relative; isolation: isolate;
   display: inline-flex; align-items: center; gap: 4px; height: 26px; padding: 0 9px 0 7px; margin-right: 2px;

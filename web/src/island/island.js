@@ -49,7 +49,7 @@ export async function bootIsland(root) {
   const status = h('div.isle-status');
   const power = h('button.isle-power', { 'aria-label': t('toggleEverything', 'Everything on / off'), onclick: toggleEverything }, icon('power', 15, 2.4));
   const hide = h('button.isle-hide', { title: t('hideIsland', 'Hide Notch Island'), 'aria-label': t('hideIsland', 'Hide Notch Island'), onclick: () => post('toggleIsland') }, icon('eyeOff', 13, 2.2));
-  const quit = h('button.isle-quit', { title: t('quitApp', 'Quit House Control'), 'aria-label': t('quitApp', 'Quit House Control'), onclick: () => post('quit') }, icon('close', 13, 2.4));
+  const quit = h('button.isle-quit', { title: t('quitApp', 'Quit Xhome'), 'aria-label': t('quitApp', 'Quit Xhome'), onclick: () => post('quit') }, icon('close', 13, 2.4));
   const scenes = h('div.isle-scenes');
   const list = h('div.isle-list');
   const body = h('div.isle-body',
